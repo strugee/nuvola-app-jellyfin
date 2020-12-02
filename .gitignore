@@ -1,0 +1,13 @@
+Makefile
+metadata.json
+icons
+/screenshots/
+nuvola-app-jellyfin
+eu.tiliado.NuvolaAppJellyfin.desktop
+eu.tiliado.NuvolaAppJellyfin.service
+eu.tiliado.NuvolaAppJellyfin.appdata.xml
+nuvola-app-jellyfin.metainfo.xml
+eu.tiliado.WebRuntimeAppJellyfin.desktop
+eu.tiliado.WebRuntimeAppJellyfin.service
+eu.tiliado.WebRuntimeAppJellyfin.appdata.xml
+nuvola-app-jellyfin.metainfo.xml
