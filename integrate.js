@@ -25,17 +25,51 @@
 'use strict';
 
 (function (Nuvola) {
+  // Settings keys
+  var APP_URL = 'app.url'
+
   // Create media player component
   const player = Nuvola.$object(Nuvola.MediaPlayer)
 
   // Handy aliases
   const PlaybackState = Nuvola.PlaybackState
   const PlayerAction = Nuvola.PlayerAction
+  var _ = Nuvola.Translate.gettext
 
   // Create new WebApp prototype
   const WebApp = Nuvola.$WebApp()
 
   // Initialization routines
+  WebApp._onInitAppRunner = function (emitter) {
+    Nuvola.WebApp._onInitAppRunner.call(this, emitter)
+
+    Nuvola.config.setDefault(APP_URL, '')
+
+    Nuvola.core.connect('InitializationForm', this)
+    Nuvola.core.connect('PreferencesForm', this)
+  }
+
+  WebApp._onInitializationForm = function (emitter, values, entries) {
+    if (!Nuvola.config.hasKey(APP_URL)) {
+      this.appendPreferences(values, entries)
+    }
+  }
+
+  WebApp._onPreferencesForm = function (emitter, values, entries) {
+    this.appendPreferences(values, entries)
+  }
+
+  WebApp._onHomePageRequest = function (emitter, result) {
+    result.url = Nuvola.config.get(APP_URL)
+  }
+
+  WebApp.appendPreferences = function (values, entries) {
+    values[APP_URL] = Nuvola.config.get(APP_URL)
+    entries.push(['header', _('Jellyfin')])
+    entries.push(['label', _('URL of your Jellyfin server')])
+    entries.push(['string', APP_URL, 'URL'])
+  }
+
   WebApp._onInitWebWorker = function (emitter) {
     Nuvola.WebApp._onInitWebWorker.call(this, emitter)
 
